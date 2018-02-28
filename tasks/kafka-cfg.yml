@@ -54,11 +54,12 @@
   wait_for: port={{ server.port }} host={{ healthcheck_address }} connect_timeout={{ kafka_port_test_timeout_seconds }} timeout={{ kafka_port_test_timeout_seconds }}
   ignore_errors: yes
   register: healthcheck
+  when: do_kafka_healthcheck
   tags:
     - kafka-healthcheck
 
 - name: "Check kafka port test result"
   fail: msg="Kafka port not open on host={{ inventory_hostname }}, port={{ server.port }}"
-  when: healthcheck.elapsed >= kafka_port_test_timeout_seconds and kafka_port_test_timeout_seconds > 0
+  when: do_kafka_healthcheck and healthcheck.elapsed >= kafka_port_test_timeout_seconds and kafka_port_test_timeout_seconds > 0
   tags:
     - kafka-healthcheck
