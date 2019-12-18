@@ -10,6 +10,7 @@ LimitNOFILE={{ nofiles_limit }}
 Restart=on-failure
 EnvironmentFile=/etc/default/kafka
 ExecStart=/usr/local/kafka/bin/kafka-server-start.sh /etc/kafka/server.properties
+ExecStop=/usr/local/kafka/bin/kafka-server-stop.sh
 
 [Install]
 WantedBy=multi-user.target
